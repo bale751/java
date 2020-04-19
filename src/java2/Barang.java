@@ -181,6 +181,11 @@ public class Barang extends javax.swing.JFrame {
                 btnsimpanActionPerformed(evt);
             }
         });
+        btnsimpan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnsimpanKeyPressed(evt);
+            }
+        });
 
         btnhapus.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnhapus.setForeground(new java.awt.Color(255, 0, 0));
@@ -233,6 +238,11 @@ public class Barang extends javax.swing.JFrame {
         btnubah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnubahActionPerformed(evt);
+            }
+        });
+        btnubah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnubahKeyPressed(evt);
             }
         });
 
@@ -456,8 +466,12 @@ public class Barang extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(null, "Data Berhasil dihapus");
                 awal();
+                DefaultTableModel modeltable;
+                modeltable = (DefaultTableModel)tblBarang.getModel();
+                modeltable.setRowCount(0);
+
                 view_data();
-            } catch (Exception e) {
+            } catch (HeadlessException | SQLException e) {
                 System.out.println("gagal="+e.getMessage());
             }
         }else{
@@ -470,13 +484,21 @@ public class Barang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsimpanActionPerformed
 
     private void btnubahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnubahMouseClicked
-        // TODO add your handling code here:
+        
         ubah();
     }//GEN-LAST:event_btnubahMouseClicked
 
     private void btnubahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnubahActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnubahActionPerformed
+
+    private void btnubahKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnubahKeyPressed
+        ubah();
+    }//GEN-LAST:event_btnubahKeyPressed
+
+    private void btnsimpanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnsimpanKeyPressed
+        simpan();
+    }//GEN-LAST:event_btnsimpanKeyPressed
 
     private void ubah(){
         if(cbkategori.getSelectedIndex()!=0){
@@ -533,12 +555,13 @@ public class Barang extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(null, "Data Berhasil di Input");
 
-                awal();
+                
 
                 DefaultTableModel modeltable;
                 modeltable = (DefaultTableModel)tblBarang.getModel();
                 modeltable.setRowCount(0);
                 view_data();
+                awal();
 
             } catch (HeadlessException | SQLException e){
                 System.out.println("gagal="+e.getMessage());
